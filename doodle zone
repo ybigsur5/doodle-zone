@@ -1,0 +1,119 @@
+Here's the modified code for your drawing application, now titled "Doodle Zone":
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doodle Zone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        canvas {
+            border: 1px solid #000;
+            cursor: crosshair;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        .color-picker, .brush-size {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Doodle Zone</h1>
+    <canvas id="drawingCanvas" width="800" height="500"></canvas>
+    <div class="controls">
+        <input type="color" id="colorPicker" class="color-picker" value="#000000">
+        <select id="brushSize" class="brush-size">
+            <option value="5">Small</option>
+            <option value="10">Medium</option>
+            <option value="15">Large</option>
+        </select>
+        <button id="clearCanvas">Clear Canvas</button>
+        <button id="eraser">Eraser</button>
+        <button id="saveDrawing">Save Drawing</button>
+    </div>
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        const colorPicker = document.getElementById('colorPicker');
+        const brushSize = document.getElementById('brushSize');
+        const clearCanvas = document.getElementById('clearCanvas');
+        const eraser = document.getElementById('eraser');
+        const saveDrawing = document.getElementById('saveDrawing');
+
+        let drawing = false;
+        let currentColor = colorPicker.value;
+        let currentSize = brushSize.value;
+        let isEraserActive = false;
+
+        canvas.addEventListener('mousedown', (e) => {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (drawing) {
+                ctx.lineWidth = currentSize;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = isEraserActive ? '#ffffff' : currentColor;
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            drawing = false;
+            ctx.closePath();
+        });
+
+        canvas.addEventListener('mouseout', () => {
+            drawing = false;
+            ctx.closePath();
+        });
+
+        colorPicker.addEventListener('input', (e) => {
+            currentColor = e.target.value;
+            isEraserActive = false; // Disable eraser when color is changed
+        });
+
+        brushSize.addEventListener('change', (e) => {
+            currentSize = e.target.value;
+        });
+
+        clearCanvas.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        eraser.addEventListener('click', () => {
+            isEraserActive = !isEraserActive;
+            eraser.textContent = isEraserActive ? 'Brush' : 'Eraser'; // Toggle button text
+            currentColor = '#ffffff'; // Set color to white for erasing
+        });
+
+        saveDrawing.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'drawing.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    </script>
+</body>
+</html>
+```
+
+### Changes Made:
+- The title of the application has been changed to "Doodle Zone" in the `<title>` tag and the main heading (`<h1>`).
+
+You can copy and paste this code into an HTML file and open it in a web browser to use your "Doodle Zone" drawing application. Enjoy doodling!
