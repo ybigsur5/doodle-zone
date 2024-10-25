@@ -1,6 +1,3 @@
-Here's the modified code for your drawing application, now titled "Doodle Zone":
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -111,9 +108,3 @@ Here's the modified code for your drawing application, now titled "Doodle Zone":
     </script>
 </body>
 </html>
-```
-
-### Changes Made:
-- The title of the application has been changed to "Doodle Zone" in the `<title>` tag and the main heading (`<h1>`).
-
-You can copy and paste this code into an HTML file and open it in a web browser to use your "Doodle Zone" drawing application. Enjoy doodling!
